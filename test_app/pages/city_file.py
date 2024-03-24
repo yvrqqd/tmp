@@ -2,8 +2,11 @@ import streamlit as st
 import requests
 import pandas as pd
 import time
+import StringIO
 
 st.session_state["data"] = pd.DataFrame()
+st.session_state["ans"] = []
+
 with st.sidebar:
     st.title("Тестовое")
     st.page_link("main.py", label="README", icon="🏠")
@@ -26,7 +29,6 @@ uploaded_file = st.file_uploader("Выберите файл")
 if uploaded_file is not None:
   df = pd.read_csv(uploaded_file)
   df.drop(df.index[0], inplace=True)
-  df.drop(df.columns[[0]], axis=1, inplace=True)
   st.session_state["data"]=df
 
 for i in range(st.session_state["data"].shape[0]):
@@ -51,7 +53,7 @@ for i in range(st.session_state["data"].shape[0]):
         },
         {
         "role": "user",
-        "text": st.session_state["data"].iloc[i].values[0]
+        "text": st.session_state["data"].iloc[i].values[1]
         }
     ]
     }
@@ -60,7 +62,15 @@ for i in range(st.session_state["data"].shape[0]):
         city = response.get("result","").get("alternatives","")[0].get("message","").get("text","")
         cols = st.columns([2, 5])
         cols[0].code(city)
-        cols[1].write(st.session_state["data"].iloc[i].values[0])
+        cols[1].write(st.session_state["data"].iloc[i].values[1])
+        st.session_state["ans"].append(city)
     except:
         st.error("Квота закончилась")
+        break
     time.sleep(1)
+df2 = df.head(len(st.session_state["ans"]))
+df2['Answer'] = st.session_state["ans"]
+csv_buffer = StringIO()
+df2.to_csv(csv_buffer, index=False)
+csv_string = csv_buffer.getvalue()
+st.download_button('Download CSV', csv_string, 'text/csv')
