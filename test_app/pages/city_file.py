@@ -5,8 +5,8 @@ import time
 
 
 
-st.session_state["data"] = pd.DataFrame([1,1])
-st.session_state["ans"] = [3,2]
+st.session_state["data"] = pd.DataFrame()
+st.session_state["ans"] = []
 
 with st.sidebar:
     st.title("Тестовое")
@@ -71,7 +71,6 @@ for i in range(st.session_state["data"].shape[0]):
     time.sleep(1)
 
 if len(st.session_state["ans"]) > 0:
-    
     df2 = st.session_state["data"].head(len(st.session_state["ans"]))
     df2['Answer'] = st.session_state["ans"]
     csv_string = df2.to_csv(index=False)
