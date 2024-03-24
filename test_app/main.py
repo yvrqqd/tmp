@@ -18,3 +18,27 @@ st.subheader("Задание 2")
 st.page_link("pages\\random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
 st.subheader("Дополнение")
 st.write("Решение первого задания можно улучшить, добавив базу с известными сокращениями и использовав RAG (Retrieval Augmented Generation).")
+
+
+from groq import Groq
+
+client = Groq(
+    api_key=st.secrets["groq_token"]
+)
+st.write(st.secrets["groq_token"])
+chat_completion = client.chat.completions.create(
+    messages=[
+        {
+            "role": "user",
+            "content": "Explain the importance of low latency LLMs",
+        }
+    ],
+    model="mixtral-8x7b-32768",
+    temperature=0.5,
+    max_tokens=5640,
+    top_p=1,
+    stream=True,
+    stop=None,
+)
+
+st.write(chat_completion.choices[0].message.content)
