@@ -9,7 +9,7 @@ with st.sidebar:
     st.page_link("pages/city_chat.py", label="Город из сообщения | чат", icon="1️⃣")
     st.page_link("pages/city_file.py", label="Город из сообщения | файл", icon="2️⃣")
     st.subheader("Задание 2")
-    st.page_link("pages/random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
+    st.page_link("pages/random_greeting.py", label="Рандомное поздравление", icon="1️⃣")
 
 st.text_area("Сообщение:",value="Здравствуйте, сколько стоит доставка цветов в город Екб? Нужно до завтра. Спасибо.", key="input_message")
 st.button("Определить город", key="submitted")
