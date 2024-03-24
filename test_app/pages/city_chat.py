@@ -11,32 +11,40 @@ with st.sidebar:
     st.subheader("Задание 2")
     st.page_link("pages/random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
 
+st.text_area("Сообщение:",value="Здравствуйте, сколько стоит доставка цветов в город Екб? Нужно до завтра. Спасибо.", key="input_message")
+st.button("Определить город", key="submitted")
 
-url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
-headers = {
-    "accept": "application/json",
-    "Authorization": f"Api-Key {st.secrets["token"]}",
-    "x-folder-id:": "application/json"
-}
-data = {
-  "modelUri": "string",
-  "completionOptions": {
-    "stream": false,
-    "temperature": 0.5,
-    "maxTokens": 10
-  },
-  "messages": [
-    {
-      "role": "system",
-      "text": "string"
-    },
-    {
-      "role": "user",
-      "text": "string"
+if st.session_state["submitted"]:
+
+    url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Api-Key {st.secrets['token']}",
+        "Content-Type": "application/json"
     }
-  ]
-}
-response = requests.post(url, headers=headers, json=data).json()["alternatives"][0]["message"]["text"]
 
+    body = {
+    "modelUri": "gpt://b1gfl2975iijeg2iqtc0/yandexgpt-lite/latest",
+    "completionOptions": {
+        "stream": False,
+        "temperature": 0.1,
+        "maxTokens": 10
+    },
+    "messages": [
+        {
+        "role": "system",
+        "text":  "Ты бот для магазина, который работает в нескольких городах. В запросе есть упоминание конкретного города, оно может быть в сокращенной форме и с ошибками. Твоя задача - определить город и написать его название в полной форме. В ответе ничего, кроме наименования упомянутого города быть не должно."
+        },
+        {
+        "role": "user",
+        "text": st.session_state["input_message"]
+        }
+    ]
+    }
+    response = requests.post(url, headers=headers, json=body).json()
 
-st.success(response)
+    try:
+        city = response.get("result","").get("alternatives","")[0].get("message","").get("text","")
+        st.success(city)
+    except:
+        st.error("Квота закончилась")
