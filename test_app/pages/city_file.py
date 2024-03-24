@@ -69,7 +69,10 @@ for i in range(st.session_state["data"].shape[0]):
         st.error("Квота закончилась")
         break
     time.sleep(1)
-df2 = df.head(len(st.session_state["ans"]))
-df2['Answer'] = st.session_state["ans"]
-csv_string = df2.to_csv(index=False)
-st.download_button('Download CSV', csv_string, 'text/csv')
+
+if len(st.session_state["ans"]) > 0:
+    
+    df2 = st.session_state["data"].head(len(st.session_state["ans"]))
+    df2['Answer'] = st.session_state["ans"]
+    csv_string = df2.to_csv(index=False)
+    st.download_button('Download CSV', csv_string, 'text/csv')
