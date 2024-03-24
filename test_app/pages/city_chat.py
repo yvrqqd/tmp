@@ -1,6 +1,5 @@
 import streamlit as st
-from groq import Groq
-
+import requests
 
 
 with st.sidebar:
@@ -12,29 +11,32 @@ with st.sidebar:
     st.subheader("Задание 2")
     st.page_link("pages/random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
 
-client = Groq(
-    api_key=st.secrets["groq_token"]
-)
 
-chat_completion = client.chat.completions.create(
-    messages=[
-        # Set an optional system message. This sets the behavior of the
-        # assistant and can be used to provide specific instructions for
-        # how it should behave throughout the conversation.
-        {
-            "role": "system",
-            "content": "you are a helpful assistant."
-        },
-        # Set a user message for the assistant to respond to.
-        {
-            "role": "user",
-            "content": "Explain the importance of low latency LLMs",
-        }
-    ],
-    model="mixtral-8x7b-32768",
-    temperature=0.5,
-    max_tokens=100,
-    top_p=1
-)
+url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
+headers = {
+    "accept": "application/json",
+    "Authorization": f"Api-Key {st.secrets["token"]}",
+    "x-folder-id:": "application/json"
+}
+data = {
+  "modelUri": "string",
+  "completionOptions": {
+    "stream": false,
+    "temperature": 0.5,
+    "maxTokens": 10
+  },
+  "messages": [
+    {
+      "role": "system",
+      "text": "string"
+    },
+    {
+      "role": "user",
+      "text": "string"
+    }
+  ]
+}
+response = requests.post(url, headers=headers, json=data).json()["alternatives"][0]["message"]["text"]
 
-st.success(chat_completion.choices[0].message.content)
+
+st.success(response)
