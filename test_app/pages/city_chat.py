@@ -12,16 +12,20 @@ with st.sidebar:
     st.subheader("Задание 2")
     st.page_link("pages/random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
 
-
-st.text_area("Сообщение:",value="Здравствуйте, сколько стоит доставка цветов в город Екб? Нужно до завтра. Спасибо.", key="input_message")
-st.button("Определить город", key="submitted")
-
 client = Groq(
     api_key=st.secrets["groq_token"]
 )
 
 chat_completion = client.chat.completions.create(
     messages=[
+        # Set an optional system message. This sets the behavior of the
+        # assistant and can be used to provide specific instructions for
+        # how it should behave throughout the conversation.
+        {
+            "role": "system",
+            "content": "you are a helpful assistant."
+        },
+        # Set a user message for the assistant to respond to.
         {
             "role": "user",
             "content": "Explain the importance of low latency LLMs",
