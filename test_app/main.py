@@ -24,3 +24,6 @@ st.write("Можно переписать, используя асинхронн
 
 
 st.write("Решение первого задания можно улучшить, добавив базу с известными сокращениями и использовав RAG (Retrieval Augmented Generation).")
+st.write("Также ошибки которые иногда выдаются можно отслеживать с помощью агентовhttps://github.com/yvrqqd/tmp/")
+
+st.link_button("Go to github","https://github.com/yvrqqd/tmp/")
