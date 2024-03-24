@@ -5,8 +5,8 @@ import time
 
 
 
-st.session_state["data"] = pd.DataFrame()
-st.session_state["ans"] = []
+st.session_state["data"] = pd.DataFrame([1,1])
+st.session_state["ans"] = [3,2]
 
 with st.sidebar:
     st.title("Тестовое")
