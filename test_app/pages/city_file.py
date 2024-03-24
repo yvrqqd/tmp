@@ -2,7 +2,8 @@ import streamlit as st
 import requests
 import pandas as pd
 import time
-import StringIO
+
+
 
 st.session_state["data"] = pd.DataFrame()
 st.session_state["ans"] = []
@@ -70,7 +71,5 @@ for i in range(st.session_state["data"].shape[0]):
     time.sleep(1)
 df2 = df.head(len(st.session_state["ans"]))
 df2['Answer'] = st.session_state["ans"]
-csv_buffer = StringIO()
-df2.to_csv(csv_buffer, index=False)
-csv_string = csv_buffer.getvalue()
+csv_string = df2.to_csv(index=False)
 st.download_button('Download CSV', csv_string, 'text/csv')
