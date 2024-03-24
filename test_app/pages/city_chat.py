@@ -11,7 +11,7 @@ with st.sidebar:
     st.subheader("Задание 2")
     st.page_link("pages/random_greeting.py", label="Рандомное поздравление", icon="1️⃣")
 
-st.text_area("Сообщение:",value="Здравствуйте, сколько стоит доставка цветов в город Екб? Нужно до завтра. Спасибо.", key="input_message")
+st.text_area("Сообщение:",value="Где находится Ваша компания? В Питере или Екб? Доставка нужна в Москву.", key="input_message")
 st.button("Определить город", key="submitted")
 
 if st.session_state["submitted"]:
