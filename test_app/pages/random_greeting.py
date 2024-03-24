@@ -13,7 +13,7 @@ with st.sidebar:
     st.page_link("pages/random_greeting.py", label="Рандомное приветсвие", icon="1️⃣")
 
 st.text_input("Имя:",value="Иван", key="input_message2")
-st.button("Сгенерировать приветсвие", key="submitted2")
+st.button("Сгенерировать поздравление", key="submitted2")
 
 if st.session_state["submitted2"]:
 
@@ -34,7 +34,7 @@ if st.session_state["submitted2"]:
     "messages": [
         {
         "role": "system",
-        "text":  "Ты - чат-бот, генерирующий приветсвия. В сообщении указано имя, напиши оригинальное приветственное сообщение."
+        "text":  "Ты - чат-бот, генерирующий поздравления с днем рождения. В сообщении указано имя, напиши оригинальное поздравление, адресованное этому человеку."
         },
         {
         "role": "user",
