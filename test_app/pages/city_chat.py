@@ -27,7 +27,7 @@ if st.session_state["submitted"]:
     "modelUri": "gpt://b1gfl2975iijeg2iqtc0/yandexgpt-lite/latest",
     "completionOptions": {
         "stream": False,
-        "temperature": 0.05,
+        "temperature": 0.1,
         "maxTokens": 5
     },
     "messages": [
